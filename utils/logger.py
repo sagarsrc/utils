@@ -1,7 +1,3 @@
-"""
-logger class
-"""
-
 import os
 import logging
 
@@ -11,6 +7,7 @@ class Logger:
         """
         https://docs.python.org/3/howto/logging.html#loggers
         https://www.loggly.com/ultimate-guide/python-logging-basics/
+        https://stackoverflow.com/questions/6729268/log-messages-appearing-twice-with-python-logging
 
         level       numeric_value
         CRITICAL    50
@@ -40,6 +37,8 @@ class Logger:
 
         # add ch to logger
         logger.addHandler(ch)
+
+        logger.propagate = False
 
         self.logger = logger
 

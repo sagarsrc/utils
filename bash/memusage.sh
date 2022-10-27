@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # print memory usage for each user on machine
 # reference : https://serverfault.com/a/31056
