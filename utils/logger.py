@@ -20,7 +20,7 @@ class Logger:
         """
 
         # get log level
-        loglevel = os.environ.get("LOG_LEVEL", "INFO")
+        loglevel = os.getenv("LOG_LEVEL", "INFO")
 
         # create logger
         self.logger = logging.getLogger("util_logger")

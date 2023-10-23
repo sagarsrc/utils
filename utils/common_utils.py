@@ -9,9 +9,21 @@ from glob import glob
 
 
 class CommonUtils:
-    def __init__(self, config_path=f"""{os.environ.get("PROJECT_ROOT")}/config"""):
-        self.config_path = config_path
-        # print("setting config path", self.config_path)
+    def __init__(self, project_root=os.path.abspath(os.curdir), verbose=False):
+        self.project_root = project_root
+
+        self.config_path = f"""{project_root}/config"""
+        self.data_root = f"""{project_root}/data_root"""
+        self.config_files = glob(f"{self.config_path}/*")
+
+        if verbose:
+            print("~" * 30)
+            print(f"setting paths")
+            print(f"project_root {self.project_root}")
+            print(f"config_path {self.config_path}")
+            print(f"config_path {self.data_root}\n")
+            print(f"config files {self.config_files}")
+            print("~" * 30)
 
     def get_yml_config(self, keyname: str):
         """
@@ -23,11 +35,11 @@ class CommonUtils:
         Returns:
             dict: dictionary of configs
         """
-        files = glob(f"{self.config_path}/*.yml")
-        files_dict = {os.path.basename(i).replace(".yml", ""): i for i in files}
-        fpath = files_dict.get(keyname, "DEFAULT_PATH")
 
-        # print(f"loading config from {fpath}")
+        files_dict = {
+            os.path.basename(i).replace(".yml", ""): i for i in self.config_files
+        }
+        fpath = files_dict.get(keyname, "__DEFAULT__")
 
         with open(fpath, "r") as stream:
             try:
@@ -38,19 +50,18 @@ class CommonUtils:
         return config
 
     def get_data_root(self):
-        DATA_ROOT = os.environ.get("DATA_ROOT")
-        return DATA_ROOT
-
-    def get_global_data_root(self):
-        GLOBAL_DATA_ROOT = os.environ.get("GLOBAL_DATA_ROOT")
-        return GLOBAL_DATA_ROOT
+        return self.data_root
 
     def get_project_root(self):
-        PROJECT_ROOT = os.environ.get("PROJECT_ROOT")
-        return PROJECT_ROOT
+        return self.project_root
+
+    def make_directory_structure(self, local_paths: list = None):
+        if local_paths is not None:
+            for p in local_paths:
+                os.makedirs(f"{self.data_root}/{p}", exist_ok=True)
 
     @staticmethod
-    def path_exists(path):
+    def does_path_exist(path):
         return os.path.exists(path)
 
     @staticmethod
@@ -59,15 +70,3 @@ class CommonUtils:
         idx = series.isna()
         series[idx] = series[idx].apply(lambda x: list_fill)
         return series
-
-    @staticmethod
-    def make_directory_structure(local_paths:list=None, global_paths:list=None):
-
-        if local_paths is not None:
-            for p in local_paths:
-                os.makedirs(f"{os.environ.get('DATA_ROOT')}/{p}", exist_ok=True)
-
-        if global_paths is not None:
-            for p in global_paths:
-                os.makedirs(f"{os.environ.get('GLOBAL_DATA_ROOT')}/{p}", exist_ok=True)
-
