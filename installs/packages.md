@@ -64,7 +64,7 @@ conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 -c pytorch
 conda install pytorch torchvision torchaudio cpuonly -c pytorch
 
 # transformers
-conda install -c huggingface transformers
+# conda install -c huggingface transformers
 
 # yaml file support
 conda install -c conda-forge pyyaml
@@ -72,6 +72,13 @@ conda install -c conda-forge pyyaml
 
 
 ######### pip #########
+
+# hugging face transformers
+pip install transformers
+
+# hugging face cli and hub
+pip install --upgrade huggingface_hub
+
 # langchain
 pip install langchain
 
