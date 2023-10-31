@@ -75,6 +75,8 @@ conda install -c conda-forge pyyaml
 
 # hugging face transformers
 pip install transformers
+pip install sentencepiece
+pip install protobuf
 
 # hugging face cli and hub
 pip install --upgrade huggingface_hub
@@ -110,5 +112,8 @@ pip install requests
 pip install emoji
 pip install clean-text
 pip install Unicode
+
+# utils
+pip install --upgrade tqdm
 #########################
 ```
