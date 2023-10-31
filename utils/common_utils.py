@@ -5,6 +5,7 @@ common utils
 import os
 
 import yaml
+from datetime import datetime
 from glob import glob
 
 
@@ -13,7 +14,7 @@ class CommonUtils:
         self.project_root = project_root
 
         self.config_path = f"""{project_root}/config"""
-        self.data_root = f"""{project_root}/data_root"""
+        self.data_root = f"""{project_root}/data"""
         self.config_files = glob(f"{self.config_path}/*")
 
         if verbose:
@@ -70,3 +71,15 @@ class CommonUtils:
         idx = series.isna()
         series[idx] = series[idx].apply(lambda x: list_fill)
         return series
+
+    @staticmethod
+    def measure_time(func):
+        def wrapper(*args, **kwargs):
+            t0 = datetime.now()
+            result = func(*args, **kwargs)
+            t1 = datetime.now()
+            execution_time = t1 - t0
+            print(f"Time taken to execute '{func.__name__}': {execution_time}")
+            return result
+
+        return wrapper
