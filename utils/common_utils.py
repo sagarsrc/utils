@@ -20,10 +20,12 @@ class CommonUtils:
         if verbose:
             print("~" * 30)
             print(f"setting paths")
+            print(f"setting paths")
             print(f"project_root {self.project_root}")
             print(f"config_path {self.config_path}")
-            print(f"config_path {self.data_root}\n")
             print(f"config files {self.config_files}")
+
+            print(f"data_root {self.data_root}\n")
             print("~" * 30)
 
     def get_yml_config(self, keyname: str):

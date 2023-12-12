@@ -57,6 +57,13 @@ conda remove -n {env_name} --all
 # create env
 conda create -n llm python=3.8 pandas numpy jupyter ipykernel nltk black
 
+# ipywidgets
+conda install -c conda-forge ipywidgets
+jupyter nbextension enable --py widgetsnbextension
+
+# nodejs for jupyterlab
+conda install -c "conda-forge/label/cf201901" nodejs
+
 # macos cpu version
 conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 -c pytorch
 
