@@ -24,6 +24,11 @@ conda install -c conda-forge jupyter_contrib_nbextensions
 
 # notebook format
 conda install -c conda-forge black nb_black
+
+# ipywidgets
+conda install -c conda-forge ipywidgets
+jupyter nbextension enable --py widgetsnbextension
+
 ```
 
 # jupyter lab / notebook
@@ -57,9 +62,7 @@ conda remove -n {env_name} --all
 # create env
 conda create -n llm python=3.8 pandas numpy jupyter ipykernel nltk black
 
-# ipywidgets
-conda install -c conda-forge ipywidgets
-jupyter nbextension enable --py widgetsnbextension
+
 
 # nodejs for jupyterlab
 conda install -c "conda-forge/label/cf201901" nodejs
