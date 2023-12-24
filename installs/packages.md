@@ -23,7 +23,7 @@ conda install -c conda-forge jupyterlab
 conda install -c conda-forge jupyter_contrib_nbextensions
 
 # notebook format
-conda install -c conda-forge black nb_black
+pip install jupyter-black
 
 # ipywidgets
 conda install -c conda-forge ipywidgets
@@ -34,11 +34,9 @@ jupyter nbextension enable --py widgetsnbextension
 # jupyter lab / notebook
 
 ```bash
-# notebooks
-%load_ext nb_black
-
-# lab
-%load_ext lab_black
+# add this in the beginning of jupyter lab or notebook
+import jupyter_black
+jupyter_black.load()
 
 # run cells it will be formatted automatically
 ```
