@@ -71,17 +71,41 @@ class Bbox:
         return self.bbox_denorm
 
     @staticmethod
-    def get_iou(b1, b2):
+    def get_intersection_area_box_a_box_b(b1, b2):
         ix_1 = max(b1[0], b2[0])
         iy_1 = max(b1[1], b2[1])
 
         ix_3 = min(b1[2], b2[2])
         iy_3 = min(b1[3], b2[3])
 
+        if ix_3 < ix_1 or iy_3 < iy_1:
+            return 0.0
+
         inter_bbox = [ix_1, iy_1, ix_3, iy_3]
         inter_bbox = Bbox(inter_bbox)
         inter_area = inter_bbox.get_bbox_area()
 
+        return inter_area
+
+    @staticmethod
+    def check_box_a_in_box_b(b1, b2, inter_thold):
+        inter_area = Bbox().get_intersection_area_box_a_box_b(b1, b2)
+        req_bbox_area = Bbox(b1).get_bbox_area()
+        perc_box_a_in_box_b = inter_area / req_bbox_area
+
+        perc_box_a_in_box_b = round(perc_box_a_in_box_b, 3)
+
+        if (
+            inter_thold[0] <= perc_box_a_in_box_b
+            and perc_box_a_in_box_b <= inter_thold[1]
+        ):
+            return True
+        else:
+            return False
+
+    @staticmethod
+    def get_iou(b1, b2):
+        inter_area = Bbox().get_intersection_area_box_a_box_b(b1, b2)
         union_area = Bbox(b1).get_bbox_area() + Bbox(b2).get_bbox_area() - inter_area
 
         if union_area != 0:
@@ -89,18 +113,6 @@ class Bbox:
             return iou
         else:
             return 0
-
-    @staticmethod
-    def check_box_a_in_box_b(b1, b2):
-        b1 = np.array(b1)
-        b2 = np.array(b2)
-
-        p1_in_box_b = (b1[:2] >= b2[:2]).all()
-        p3_in_box_b = (b1[2:] <= b2[2:]).all()
-
-        b1_in_b2 = p1_in_box_b and p3_in_box_b
-
-        return b1_in_b2
 
     @staticmethod
     def plot_bbox(image_path, bboxes, labels, colors=None, fill=False):
