@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install libraries if not already present
-libs=("datasets" "xformers<0.0.27" "trl<0.9.0" "peft" "accelerate" "bitsandbytes" "wandb" "cutility" "pandarallel" )
+libs=("datasets" "flash_attn" "xformers<0.0.27" "trl<0.9.0" "peft" "accelerate" "bitsandbytes" "wandb" "cutility" "pandarallel")
 
 for lib in "${libs[@]}"; do
     libname=${lib%%<*}  # Remove version constraint if present
